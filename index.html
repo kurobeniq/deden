@@ -1,0 +1,79 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>deden</title>
+    <script type="text/javascript">
+<!--
+var canvas;
+var context;
+var img;
+var se;
+
+var BUTTON_WIDTH  = window.innerWidth * 0.9;
+var BUTTON_HEIGHT = window.innerHeight * 1 / 3;
+var BUTTON_X      = (window.innerWidth / 2) - (BUTTON_WIDTH / 2);
+var BUTTON_Y      = (window.innerHeight / 2) - (BUTTON_HEIGHT / 2);
+var TEXT_X        = window.innerWidth / 2;
+var TEXT_Y        = window.innerHeight * 4 / 5;
+var TEXT_FONT     = 'bold ' + (window.innerWidth + window.innerHeight) * 0.06 + 'px sans-serif';
+var TEXT_COLOR    = 'rgb(255, 255, 255)';
+var TEXT_ALIGN    = 'center';
+
+function main() {
+    setup();
+    setupImage();
+}
+
+function setup() {
+    canvas        = document.getElementById('c');
+    context       = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    img           = new Image();
+    se            = new Audio("deden.mp3");
+}
+
+function setupImage(){
+    img.src = "deden1.png";
+
+    // for chrome
+    img.onload = function() {
+        context.drawImage(img, BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+    }
+}
+
+function touchesBegan() {
+    // se
+    se.play();
+
+    // img
+    img.src = "deden2.png";
+    context.drawImage(img, BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+    // text
+    context.fillStyle = TEXT_COLOR;
+    context.font      = TEXT_FONT;
+    context.textAlign = TEXT_ALIGN;
+    context.fillText('OUT!!!', TEXT_X, TEXT_Y);
+}
+
+function touchesEnded() {
+    img.src = "deden1.png";
+    context.drawImage(img, BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
+}
+
+// addEventListeners
+window.addEventListener('mousedown', touchesBegan);
+window.addEventListener("mouseup" , touchesEnded);
+window.addEventListener('touchstart', touchesBegan);
+window.addEventListener('touchend', touchesEnded);
+
+//-->
+    </script>
+</head>
+<body onLoad="main()" style="margin:0px;">
+    <canvas id="c" style="background-color:black;">
+        canvasタグをサポートしたブラウザが必要
+    </canvas>
+</body>
+</html>
